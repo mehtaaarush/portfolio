@@ -47,21 +47,22 @@ export function HeroFocusScene() {
   // The hero settles back while an opaque panel irises open from the scroll button
   // in the bottom-right corner. The panel covers the hero completely, so the big hero
   // type and the quote are never on screen at the same time.
-  const heroScale = useTransform(p, [0, 0.4], [1, 0.93]);
+  const heroScale = useTransform(p, [0, 0.3], [1, 0.93]);
   const heroEvents = useTransform(p, (v) => (v < 0.1 ? "auto" : "none"));
-  const iris = useTransform(p, [0.03, 0.38], ["circle(0% at 93% 90%)", "circle(150% at 93% 90%)"]);
-  const ring = useTransform(p, [0.03, 0.38], [0, 1]);
+  // the iris is fully open (covers the whole screen) by 0.3, before any quote text appears
+  const iris = useTransform(p, [0.02, 0.3], ["circle(0% at 93% 90%)", "circle(160% at 93% 90%)"]);
+  const ring = useTransform(p, [0.02, 0.3], [0, 1]);
 
-  const frameOpacity = useTransform(p, [0.3, 0.44], [0, 1]);
-  const frameY = useTransform(p, [0.3, 0.5], [40, 0]);
-  const cornerInset = useTransform(p, [0.36, 0.52], ["-16px", "-3.5px"]);
-  const labelsOpacity = useTransform(p, [0.42, 0.52], [0, 1]);
+  const frameOpacity = useTransform(p, [0.26, 0.36], [0, 1]);
+  const frameY = useTransform(p, [0.26, 0.4], [40, 0]);
+  const cornerInset = useTransform(p, [0.3, 0.42], ["-16px", "-3.5px"]);
+  const labelsOpacity = useTransform(p, [0.34, 0.42], [0, 1]);
   const [noteOn, setNoteOn] = useState(false);
-  useMotionValueEvent(p, "change", (v) => setNoteOn(v > 0.84));
+  useMotionValueEvent(p, "change", (v) => setNoteOn(v > 0.66));
 
   return (
-    <section ref={ref} id="top" className="relative" style={{ height: "300svh" }}>
-      <span id="focus" className="absolute left-0 top-[180svh]" aria-hidden />
+    <section ref={ref} id="top" className="relative" style={{ height: "440svh" }}>
+      <span id="focus" className="absolute left-0 top-[250svh]" aria-hidden />
       <div className="sticky top-0 h-svh overflow-hidden">
         <motion.div
           style={{ scale: heroScale, pointerEvents: heroEvents }}
@@ -99,8 +100,8 @@ export function HeroFocusScene() {
               <h2 className="mt-8 text-[clamp(2.3rem,7vw,6rem)] leading-[0.98] tracking-tighter sm:mt-10">
                 <ScrollWords
                   progress={p}
-                  from={0.48}
-                  to={0.86}
+                  from={0.38}
+                  to={0.64}
                   segments={[
                     { text: `“${FOCUS_QUOTE.line1}`, className: "font-extrabold" },
                     { text: "\n" },
@@ -202,25 +203,39 @@ export function StatsScene({ toolCount }: { toolCount: number }) {
 export function AboutScene() {
   const { ref, p } = useScene();
 
-  // the big title drifts forward and dissolves completely before the story arrives,
-  // so no oversized letter fragments are left hanging behind the text
-  const textScale = useTransform(p, [0.05, 0.38], [1, 2.6]);
-  const textOpacity = useTransform(p, [0.18, 0.36], [1, 0]);
-  const textBlur = useTransform(p, [0.12, 0.36], ["blur(0px)", "blur(18px)"]);
+  // The title stays fully inside the screen: it eases back slightly, lifts up and fades,
+  // instead of zooming past the edges. The story only arrives once the title is gone.
+  const textScale = useTransform(p, [0.06, 0.34], [1, 0.9]);
+  const textY = useTransform(p, [0.06, 0.34], ["0vh", "-14vh"]);
+  const textOpacity = useTransform(p, [0.16, 0.32], [1, 0]);
+  const textBlur = useTransform(p, [0.16, 0.32], ["blur(0px)", "blur(6px)"]);
   const hintOpacity = useTransform(p, [0, 0.08], [1, 0]);
-  const storyOpacity = useTransform(p, [0.4, 0.58], [0, 1]);
-  const storyY = useTransform(p, [0.4, 0.62], [40, 0]);
-  const photoRotate = useTransform(p, [0.4, 0.66], [12, 3]);
-  const photoY = useTransform(p, [0.4, 0.66], [80, 0]);
+  const storyOpacity = useTransform(p, [0.36, 0.52], [0, 1]);
+  const storyY = useTransform(p, [0.36, 0.56], [40, 0]);
+  const photoRotate = useTransform(p, [0.36, 0.6], [12, 3]);
+  const photoY = useTransform(p, [0.36, 0.6], [80, 0]);
 
   return (
     <section ref={ref} id="about" className="relative" style={{ height: "300svh" }}>
       <div className="sticky top-0 h-svh overflow-hidden">
         <motion.h2
-          style={{ scale: textScale, opacity: textOpacity, filter: textBlur }}
-          className="chrome-text absolute inset-0 grid place-items-center text-center text-[clamp(4rem,15vw,13rem)] font-black uppercase leading-none tracking-[-0.06em] will-change-transform"
+          style={{ scale: textScale, y: textY, opacity: textOpacity, filter: textBlur }}
+          className="absolute inset-0 grid place-items-center px-5 will-change-transform"
         >
-          About me
+          <span className="flex overflow-hidden whitespace-nowrap pb-[0.08em] text-[clamp(3.2rem,12vw,11rem)] font-black uppercase leading-none tracking-[-0.05em]">
+            {"About me".split("").map((ch, i) => (
+              <motion.span
+                key={i}
+                initial={{ y: "105%" }}
+                whileInView={{ y: "0%" }}
+                viewport={{ once: true, margin: "-20% 0px" }}
+                transition={{ duration: 0.9, ease: EASE_OUT, delay: i * 0.04 }}
+                className="chrome-text inline-block"
+              >
+                {ch === " " ? "\u00a0" : ch}
+              </motion.span>
+            ))}
+          </span>
         </motion.h2>
         <motion.p
           style={{ opacity: hintOpacity }}
