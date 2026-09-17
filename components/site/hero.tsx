@@ -19,7 +19,7 @@ function Line({
 }) {
   const reduce = useReducedMotion();
   return (
-    <span className="block overflow-hidden pb-[0.06em]">
+    <span className="block overflow-y-clip pb-[0.06em]">
       <motion.span
         initial={reduce ? false : { y: "105%" }}
         animate={{ y: 0 }}
@@ -56,7 +56,7 @@ export function Hero() {
         </span>
       </a>
 
-      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-5 pt-28 pb-10 sm:px-10">
+      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pt-28 pb-10 sm:px-10">
         <div className="relative">
           <motion.p
             initial={{ opacity: 0 }}
@@ -77,20 +77,20 @@ export function Hero() {
             hi, that&apos;s me
           </HandNote>
 
-          <h1 className="chrome-text text-[clamp(3.2rem,12.5vw,10.5rem)] font-black uppercase leading-[0.86] tracking-[-0.055em]">
+          <h1 className="chrome-text px-[0.06em] text-[clamp(2.4rem,9.2vw,8rem)] font-black uppercase leading-[0.86] tracking-[-0.055em]">
             <span className="sr-only">Aarush Mehta, data and AI software engineer</span>
             <span aria-hidden>
-              <Line delay={D + 0.05} className="lg:justify-end lg:pr-[4%]">
+              <Line delay={D + 0.05} className="lg:justify-end lg:pr-[3%]">
                 Data &amp; AI
               </Line>
-              <Line delay={D + 0.17} className="lg:pl-[6%]">
+              <Line delay={D + 0.17} className="lg:pl-[3%]">
                 Soft
                 <IconChip className="bg-[#101a33] text-volt">
                   <ChartSpline className="size-[0.5em]" strokeWidth={2.25} />
                 </IconChip>
                 ware
               </Line>
-              <Line delay={D + 0.29} className="lg:-ml-[4%]">
+              <Line delay={D + 0.29}>
                 En
                 <IconChip className="bg-[#2a1208] text-ember">
                   <Bot className="size-[0.5em]" strokeWidth={2.25} />
@@ -104,7 +104,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: D + 0.9, duration: 0.8 }}
-            className="mt-6 max-w-[28ch] font-mono text-[11px] uppercase leading-relaxed tracking-[0.18em] text-muted-foreground lg:absolute lg:bottom-[0.5em] lg:right-0 lg:mt-0"
+            className="mt-6 max-w-[28ch] font-mono text-[11px] uppercase leading-relaxed tracking-[0.18em] text-muted-foreground lg:absolute lg:right-0 lg:top-full lg:mt-8"
           >
             Currently looking for SWE / ML internships. Remote or on-site is fine.
           </motion.p>
