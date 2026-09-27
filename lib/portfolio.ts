@@ -82,6 +82,17 @@ export const works: Work[] = [
     slide: { src: unsplash("1563013544-824ae1b704d3"), alt: "Hands holding a credit card over a laptop keyboard" },
   },
   {
+    slug: "olist-dashboard",
+    kind: "Power BI · Data visualization",
+    title: "Olist E-Commerce Analytics Dashboard",
+    period: "2025",
+    blurb:
+      "An interactive Power BI report over the Brazilian Olist e-commerce dataset. KPI cards track orders, revenue, payments, late-delivery rate and review score, while a category breakdown, an on-time vs late split, a delivery-time against review-score scatter and a state-by-year matrix show where the experience slips.",
+    metric: { value: "89K", label: "orders analysed" },
+    stack: ["Power BI", "DAX", "Power Query", "Data modelling", "Olist dataset"],
+    slide: { src: unsplash("1551288049-bebda4e38f71"), alt: "Analytics dashboard with charts on a screen" },
+  },
+  {
     slug: "deploy",
     kind: "Backend · infrastructure",
     title: "Shipping DocIntel to production",
