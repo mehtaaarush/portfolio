@@ -20,6 +20,7 @@ import { skills, works } from "@/lib/portfolio";
 const EMAIL = "aarushmehta902@gmail.com";
 const featured = works.filter((w) => !["path-planning", "deploy"].includes(w.slug));
 const toolCount = skills.reduce((n, s) => n + s.items.length, 0);
+const projectCount = featured.length;
 
 const rowA = ["Python", "PyTorch", "LangChain", "LangGraph", "FAISS", "OpenCV", "DINOv2", "Gemini API", "Scikit-Learn", "Transformers"];
 const rowB = ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Docker", "Alembic", "Tailwind CSS", "Vercel", "Render", "Git"];
@@ -75,7 +76,7 @@ export default function Home() {
           </div>
         </section>
 
-        <StatsScene toolCount={toolCount} />
+        <StatsScene toolCount={toolCount} projectCount={projectCount} />
 
         <AboutScene />
 
@@ -105,7 +106,7 @@ export default function Home() {
           <Reveal className="mx-auto max-w-6xl px-5 text-center sm:px-10">
             <Pill>Selected work</Pill>
             <h2 className="mx-auto mt-8 max-w-[20ch] text-[clamp(2rem,4.6vw,3.8rem)] font-extrabold leading-[1.02] tracking-tighter text-balance">
-              Five builds, from pixels to production.{" "}
+              {projectCount} builds, from raw data to production.{" "}
               <span className="font-serif font-normal italic text-muted-foreground">Keep scrolling.</span>
             </h2>
             <HandNote arrow="down-left" rotate={-3} className="mt-3 justify-center">

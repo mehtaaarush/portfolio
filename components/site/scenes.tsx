@@ -134,7 +134,7 @@ export function HeroFocusScene() {
 /* 2. Statistics panel rises like a sheet, words light up, stats pop   */
 /* ------------------------------------------------------------------ */
 
-export function StatsScene({ toolCount }: { toolCount: number }) {
+export function StatsScene({ toolCount, projectCount }: { toolCount: number; projectCount: number }) {
   const { ref, p } = useScene();
   const [play, setPlay] = useState(false);
   useMotionValueEvent(p, "change", (v) => {
@@ -148,7 +148,7 @@ export function StatsScene({ toolCount }: { toolCount: number }) {
   const statsOpacity = useTransform(p, [0.58, 0.72], [0, 1]);
 
   const stats = [
-    { label: "Projects shipped", value: 5 },
+    { label: "Projects shipped", value: projectCount },
     { label: "RAG faithfulness", value: 1, decimals: 1 },
     { label: "Internships", value: 2 },
     { label: "Tech & tools", value: toolCount, suffix: "+" },
