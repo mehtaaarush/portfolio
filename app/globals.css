@@ -210,6 +210,12 @@
 @keyframes bob {
   50% { transform: translateY(-7px); }
 }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+.rise { animation: rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
 .marquee { animation: marquee 45s linear infinite; }
 .bob { animation: bob 5.5s ease-in-out infinite; }
@@ -224,7 +230,7 @@
 ::view-transition-old(root) { z-index: 1; }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee, .bob { animation: none; }
+  .marquee, .bob, .rise { animation: none; }
   .marker { transition: none; }
   .spotlight::before { transition: none; }
 }

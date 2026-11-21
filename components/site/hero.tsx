@@ -8,14 +8,10 @@ import { HandNote } from "@/components/site/hand";
 import { HeroChart } from "@/components/site/hero-chart";
 import { Marker } from "@/components/site/marker";
 import { links } from "@/lib/portfolio";
-import { EASE_OUT } from "@/lib/motion";
 import { AVAILABILITY, HERO } from "@/lib/site-content";
 
-const rise = (delay: number) => ({
-  initial: { opacity: 0, y: 22, filter: "blur(6px)" },
-  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-  transition: { duration: 0.85, ease: EASE_OUT, delay },
-});
+/* The hero text enters with a CSS animation (.rise in globals.css), so it shows on first paint without waiting for JavaScript. */
+const delay = (s: number) => ({ animationDelay: `${s}s` });
 
 function StickyNote({
   children,
@@ -102,9 +98,9 @@ export function Hero() {
     <section id="top" className="relative pt-28 sm:pt-36">
       <div className="mx-auto grid max-w-6xl items-center gap-16 px-5 sm:px-8 lg:grid-cols-[1.25fr_0.75fr] lg:gap-8">
         <div>
-          <motion.p
-            {...rise(0.05)}
-            className="inline-flex items-center gap-2.5 rounded-full border bg-card/80 py-1.5 pl-3 pr-4 text-sm font-medium shadow-paper backdrop-blur"
+          <p
+            style={delay(0.05)}
+            className="rise inline-flex items-center gap-2.5 rounded-full border bg-card/80 py-1.5 pl-3 pr-4 text-sm font-medium shadow-paper backdrop-blur"
           >
             {AVAILABILITY.open && (
               <span className="relative flex size-2.5" aria-hidden>
@@ -113,28 +109,28 @@ export function Hero() {
               </span>
             )}
             {AVAILABILITY.text}
-          </motion.p>
+          </p>
 
           <h1 className="mt-7 font-heading">
-            <motion.span
-              {...rise(0.15)}
-              className="block text-[clamp(3rem,7.2vw,5.6rem)] font-bold leading-[0.95] tracking-[-0.04em]"
+            <span
+              style={delay(0.15)}
+              className="rise block text-[clamp(3rem,7.2vw,5.6rem)] font-bold leading-[0.95] tracking-[-0.04em]"
             >
               {HERO.hello}
-            </motion.span>
-            <motion.span
-              {...rise(0.28)}
-              className="mt-4 block max-w-[24ch] text-[clamp(1.55rem,3vw,2.45rem)] font-semibold leading-[1.18] tracking-[-0.02em] text-foreground/85"
+            </span>
+            <span
+              style={delay(0.28)}
+              className="rise mt-4 block max-w-[24ch] text-[clamp(1.55rem,3vw,2.45rem)] font-semibold leading-[1.18] tracking-[-0.02em] text-foreground/85"
             >
               {HERO.lead} <Marker delay={0.9}>{HERO.highlight}</Marker>
-            </motion.span>
+            </span>
           </h1>
 
-          <motion.p {...rise(0.4)} className="mt-6 max-w-[58ch] text-[17px] leading-relaxed text-muted-foreground">
+          <p style={delay(0.4)} className="rise mt-6 max-w-[58ch] text-[17px] leading-relaxed text-muted-foreground">
             {HERO.intro}
-          </motion.p>
+          </p>
 
-          <motion.div {...rise(0.52)} className="mt-9 flex flex-wrap items-center gap-3">
+          <div style={delay(0.52)} className="rise mt-9 flex flex-wrap items-center gap-3">
             <a
               href="#projects"
               className="group inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 font-semibold text-primary-foreground shadow-[0_12px_28px_-12px_var(--primary)] transition-[translate,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_-12px_var(--primary)]"
@@ -159,7 +155,7 @@ export function Hero() {
                 </a>
               ))}
             </span>
-          </motion.div>
+          </div>
         </div>
 
         <Polaroid />
