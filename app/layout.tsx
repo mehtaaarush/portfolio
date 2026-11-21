@@ -1,43 +1,57 @@
-import type { Metadata } from "next";
-import { Caveat, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Bricolage_Grotesque, Caveat, Figtree, JetBrains_Mono } from "next/font/google";
+
+import { Providers } from "@/components/site/providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const heading = Bricolage_Grotesque({
+  variable: "--nf-heading",
+  subsets: ["latin"],
+  axes: ["opsz"],
+});
+
+const body = Figtree({
+  variable: "--nf-body",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const mono = JetBrains_Mono({
+  variable: "--nf-mono",
   subsets: ["latin"],
-});
-
-const display = Instrument_Serif({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
 });
 
 const hand = Caveat({
-  variable: "--font-caveat",
+  variable: "--nf-hand",
   subsets: ["latin"],
   weight: ["500", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Aarush Mehta | Data Science & AI Engineer",
+  title: "Aarush Mehta · Data Science & AI/ML student, Class of 2027",
   description:
-    "Aarush Mehta, a Data Science & AI/ML student, builds agentic RAG systems, ML models and full-stack AI products.",
+    "Aarush Mehta is a final-year B.Tech CSE student at UPES Dehradun (Data Science & AI/ML, Class of 2027) building forecasting, experimentation, analytics and retrieval-augmented AI projects, most with live demos.",
 };
+
+export const viewport: Viewport = {
+  themeColor: "#f7f5ef",
+};
+
+/* Runs before first paint so a saved dark theme never flashes light. Light is the default. */
+const themeScript = `try{if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${display.variable} ${hand.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${heading.variable} ${body.variable} ${mono.variable} ${hand.variable} h-full antialiased`}
     >
-      <body className="grain min-h-full flex flex-col bg-background text-foreground">{children}</body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className="flex min-h-full flex-col">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

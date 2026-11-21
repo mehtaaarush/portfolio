@@ -3,15 +3,11 @@
 import { animate, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef } from "react";
 
-/**
- * Counts from 0 to `value`. Starts when scrolled into view, or when `play` flips true
- * (for counters inside pinned scenes, where "in view" happens long before they're revealed).
- */
-export function CountUp({ value, decimals = 0, play }: { value: number; decimals?: number; play?: boolean }) {
+/** Counts from `from` to `value` the first time it scrolls into view. */
+export function CountUp({ value, from = 0, decimals = 0 }: { value: number; from?: number; decimals?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+  const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
   const reduce = useReducedMotion();
-  const go = play ?? inView;
 
   useEffect(() => {
     const el = ref.current;
@@ -20,11 +16,11 @@ export function CountUp({ value, decimals = 0, play }: { value: number; decimals
       el.textContent = value.toFixed(decimals);
       return;
     }
-    if (!go) {
-      el.textContent = (0).toFixed(decimals);
+    if (!inView) {
+      el.textContent = from.toFixed(decimals);
       return;
     }
-    const controls = animate(0, value, {
+    const controls = animate(from, value, {
       duration: 1.6,
       ease: [0.16, 1, 0.3, 1],
       onUpdate: (v) => {
@@ -32,7 +28,7 @@ export function CountUp({ value, decimals = 0, play }: { value: number; decimals
       },
     });
     return () => controls.stop();
-  }, [go, reduce, value, decimals]);
+  }, [inView, reduce, value, from, decimals]);
 
   return (
     <span ref={ref} className="tabular-nums">

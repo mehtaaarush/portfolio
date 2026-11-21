@@ -1,142 +1,171 @@
 "use client";
 
-import { ArrowDownRight, Bot, ChartSpline, CodeXml, Mail } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { motion } from "motion/react";
+import Image from "next/image";
 
 import { HandNote } from "@/components/site/hand";
-import { INTRO_DELAY as D } from "@/lib/motion";
+import { HeroChart } from "@/components/site/hero-chart";
+import { Marker } from "@/components/site/marker";
+import { links } from "@/lib/portfolio";
+import { EASE_OUT } from "@/lib/motion";
+import { AVAILABILITY, HERO } from "@/lib/site-content";
 
-const ease = [0.16, 1, 0.3, 1] as const;
+const rise = (delay: number) => ({
+  initial: { opacity: 0, y: 22, filter: "blur(6px)" },
+  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+  transition: { duration: 0.85, ease: EASE_OUT, delay },
+});
 
-function Line({
+function StickyNote({
   children,
+  className,
+  rotate,
   delay,
-  className = "",
+  tone = "yellow",
 }: {
   children: React.ReactNode;
+  className: string;
+  rotate: number;
   delay: number;
-  className?: string;
+  tone?: "yellow" | "blue";
 }) {
-  const reduce = useReducedMotion();
   return (
-    <span className="block overflow-y-clip pb-[0.06em]">
-      <motion.span
-        initial={reduce ? false : { y: "105%" }}
-        animate={{ y: 0 }}
-        transition={{ duration: 1.1, ease, delay }}
-        className={`flex items-center ${className}`}
+    <motion.div
+      initial={{ opacity: 0, scale: 1.25, rotate: rotate * 3 }}
+      animate={{ opacity: 1, scale: 1, rotate }}
+      transition={{ type: "spring", stiffness: 260, damping: 16, delay }}
+      className={`absolute z-10 ${className}`}
+    >
+      <div
+        className={`bob rounded-[3px] px-3.5 py-3 shadow-paper ${
+          tone === "yellow" ? "bg-sticky" : "bg-tint-ai"
+        }`}
+        style={{ animationDelay: `${delay}s` }}
       >
         {children}
-      </motion.span>
-    </span>
+      </div>
+    </motion.div>
   );
 }
 
-function IconChip({ children, className }: { children: React.ReactNode; className: string }) {
+function Polaroid() {
   return (
-    <span
-      className={`mx-[0.08em] inline-grid size-[0.78em] shrink-0 place-items-center rounded-[0.18em] border border-white/10 ${className}`}
-      aria-hidden
-    >
-      {children}
-    </span>
+    <div className="relative mx-auto w-[min(72vw,330px)] lg:mr-4 lg:ml-auto">
+      <HandNote
+        arrow="down-right"
+        rotate={-8}
+        delay={1.5}
+        play
+        className="absolute -left-28 -top-12 hidden xl:inline-flex"
+      >
+        hi, that&apos;s me!
+      </HandNote>
+
+      <motion.div
+        initial={{ opacity: 0, y: 50, rotate: 9, scale: 0.92 }}
+        animate={{ opacity: 1, y: 0, rotate: 2.5, scale: 1 }}
+        transition={{ type: "spring", stiffness: 110, damping: 15, delay: 0.3 }}
+      >
+        <figure className="relative rounded-[4px] bg-polaroid p-3 pb-14 shadow-lift transition-[rotate,scale] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-rotate-3 hover:scale-[1.025]">
+          <span aria-hidden className="tape absolute -top-3.5 left-1/2 h-7 w-28 -translate-x-1/2 -rotate-3" />
+          <div className="relative aspect-square overflow-hidden rounded-[2px] bg-muted">
+            <Image
+              src="/aarush.png"
+              alt="Aarush Mehta sitting at a table on a boat deck on a sunny day"
+              fill
+              sizes="(min-width: 1024px) 330px, 72vw"
+              loading="eager"
+              className="object-cover"
+            />
+          </div>
+          <figcaption className="absolute inset-x-0 bottom-3 text-center font-hand text-[1.6rem] font-bold leading-none text-[#16213a]">
+            Aarush · CSE ’27
+          </figcaption>
+        </figure>
+      </motion.div>
+
+      <StickyNote rotate={-6} delay={1.0} className="-left-6 top-8 sm:-left-16">
+        <p className="font-heading text-2xl font-bold leading-none tracking-tight text-foreground">4.3%</p>
+        <p className="mt-1 max-w-[12ch] font-mono text-[10px] uppercase leading-snug tracking-wide text-muted-foreground">forecast error (WAPE), ridership</p>
+      </StickyNote>
+      <StickyNote rotate={5} delay={1.2} tone="blue" className="-right-5 bottom-24 sm:-right-12">
+        <p className="font-heading text-2xl font-bold leading-none tracking-tight text-foreground">+$0.77</p>
+        <p className="mt-1 max-w-[12ch] font-mono text-[10px] uppercase leading-snug tracking-wide text-muted-foreground">lift per customer, A/B test</p>
+      </StickyNote>
+    </div>
   );
 }
 
 export function Hero() {
   return (
-    <div className="hero-spotlight relative flex h-full flex-col overflow-hidden">
-      {/* vertical availability tab */}
-      <a
-        href="#contact"
-        className="absolute left-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-r-2xl bg-white px-2.5 py-6 text-black md:block"
-      >
-        <span className="flex items-center gap-2 font-mono text-[10px] font-medium uppercase tracking-[0.3em] [writing-mode:vertical-rl]">
-          <span className="size-1.5 rounded-full bg-emerald-500" /> Available for internships
-        </span>
-      </a>
-
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pt-28 pb-10 sm:px-10">
-        <div className="relative">
+    <section id="top" className="relative pt-28 sm:pt-36">
+      <div className="mx-auto grid max-w-6xl items-center gap-16 px-5 sm:px-8 lg:grid-cols-[1.25fr_0.75fr] lg:gap-8">
+        <div>
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: D + 0.7, duration: 0.8 }}
-            className="mb-6 max-w-[30ch] font-mono text-[11px] uppercase leading-relaxed tracking-[0.18em] text-muted-foreground lg:absolute lg:left-0 lg:top-[0.6em] lg:mb-0 lg:max-w-[24ch] lg:text-right"
+            {...rise(0.05)}
+            className="inline-flex items-center gap-2.5 rounded-full border bg-card/80 py-1.5 pl-3 pr-4 text-sm font-medium shadow-paper backdrop-blur"
           >
-            Hi, I&apos;m Aarush. I like building AI that shows its work.
+            {AVAILABILITY.open && (
+              <span className="relative flex size-2.5" aria-hidden>
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500/60" />
+                <span className="relative inline-flex size-2.5 rounded-full bg-emerald-500" />
+              </span>
+            )}
+            {AVAILABILITY.text}
           </motion.p>
 
-          <HandNote
-            play
-            delay={D + 1.6}
-            arrow="down-right"
-            rotate={-6}
-            className="absolute -top-16 right-[6%] hidden lg:inline-flex"
-          >
-            hi, that&apos;s me
-          </HandNote>
-
-          <h1 className="chrome-text px-[0.06em] text-[clamp(2.4rem,9.2vw,8rem)] font-black uppercase leading-[0.86] tracking-[-0.055em]">
-            <span className="sr-only">Aarush Mehta, data and AI software engineer</span>
-            <span aria-hidden>
-              <Line delay={D + 0.05} className="lg:justify-end lg:pr-[3%]">
-                Data &amp; AI
-              </Line>
-              <Line delay={D + 0.17} className="lg:pl-[3%]">
-                Soft
-                <IconChip className="bg-[#101a33] text-volt">
-                  <ChartSpline className="size-[0.5em]" strokeWidth={2.25} />
-                </IconChip>
-                ware
-              </Line>
-              <Line delay={D + 0.29}>
-                En
-                <IconChip className="bg-[#2a1208] text-ember">
-                  <Bot className="size-[0.5em]" strokeWidth={2.25} />
-                </IconChip>
-                gineer
-              </Line>
-            </span>
+          <h1 className="mt-7 font-heading">
+            <motion.span
+              {...rise(0.15)}
+              className="block text-[clamp(3rem,7.2vw,5.6rem)] font-bold leading-[0.95] tracking-[-0.04em]"
+            >
+              {HERO.hello}
+            </motion.span>
+            <motion.span
+              {...rise(0.28)}
+              className="mt-4 block max-w-[24ch] text-[clamp(1.55rem,3vw,2.45rem)] font-semibold leading-[1.18] tracking-[-0.02em] text-foreground/85"
+            >
+              {HERO.lead} <Marker delay={0.9}>{HERO.highlight}</Marker>
+            </motion.span>
           </h1>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: D + 0.9, duration: 0.8 }}
-            className="mt-6 max-w-[28ch] font-mono text-[11px] uppercase leading-relaxed tracking-[0.18em] text-muted-foreground lg:absolute lg:right-0 lg:top-full lg:mt-8"
-          >
-            Currently looking for SWE / ML internships. Remote or on-site is fine.
+          <motion.p {...rise(0.4)} className="mt-6 max-w-[58ch] text-[17px] leading-relaxed text-muted-foreground">
+            {HERO.intro}
           </motion.p>
+
+          <motion.div {...rise(0.52)} className="mt-9 flex flex-wrap items-center gap-3">
+            <a
+              href="#projects"
+              className="group inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 font-semibold text-primary-foreground shadow-[0_12px_28px_-12px_var(--primary)] transition-[translate,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_-12px_var(--primary)]"
+            >
+              See my projects
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex h-12 items-center rounded-full border border-foreground/15 bg-card/80 px-6 font-semibold transition-[translate,border-color,background-color] duration-300 hover:-translate-y-0.5 hover:border-foreground/30 hover:bg-card"
+            >
+              Get in touch
+            </a>
+            <span className="flex items-center gap-4 px-2 text-sm font-semibold text-muted-foreground">
+              {[
+                ["GitHub", links.github],
+                ["LinkedIn", links.linkedin],
+              ].map(([label, href]) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-0.5 transition-colors hover:text-foreground">
+                  {label}
+                  <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+              ))}
+            </span>
+          </motion.div>
         </div>
+
+        <Polaroid />
       </div>
 
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-6 px-5 pb-10 sm:px-10">
-        <div className="flex gap-2">
-          <a href="https://github.com/mehtaaarush" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="grid size-9 place-items-center rounded-full border border-white/10 text-muted-foreground hover:text-foreground">
-            <CodeXml className="size-4" />
-          </a>
-          <a href="mailto:aarushmehta902@gmail.com" aria-label="Email" className="grid size-9 place-items-center rounded-full border border-white/10 text-muted-foreground hover:text-foreground">
-            <Mail className="size-4" />
-          </a>
-        </div>
-        <motion.span
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1.4, ease, delay: D + 0.4 }}
-          className="h-px flex-1 origin-left bg-gradient-to-r from-transparent via-white/25 to-white/10"
-        />
-        <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-          Dehradun, IN — 2026
-        </p>
-        <a
-          href="#focus"
-          aria-label="Scroll to core focus"
-          className="grid size-11 shrink-0 place-items-center rounded-full bg-white text-black transition-transform hover:rotate-[-45deg]"
-        >
-          <ArrowDownRight className="size-5" />
-        </a>
-      </div>
-    </div>
+      <HeroChart />
+    </section>
   );
 }

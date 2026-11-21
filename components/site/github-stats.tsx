@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, GitCommitHorizontal } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { CountUp } from "@/components/site/count-up";
@@ -16,7 +16,7 @@ interface Stats {
 
 /** Live numbers from the public GitHub API; falls back to known values if the request fails. */
 export function GithubStats() {
-  const [stats, setStats] = useState<Stats>({ repos: 5, activeThisYear: 5, lastPush: null, languages: ["Python", "Jupyter Notebook"] });
+  const [stats, setStats] = useState<Stats>({ repos: 13, activeThisYear: 13, lastPush: null, languages: ["Python", "Jupyter Notebook", "TypeScript", "Java"] });
   const [live, setLive] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export function GithubStats() {
       fetch(`https://api.github.com/users/${USER}`).then((r) => (r.ok ? r.json() : Promise.reject())),
       fetch(`https://api.github.com/users/${USER}/repos?per_page=100&sort=pushed`).then((r) => (r.ok ? r.json() : Promise.reject())),
     ])
-      .then(([user, repos]: [{ public_repos: number; followers: number }, { stargazers_count: number; pushed_at: string; language: string | null; fork: boolean }[]]) => {
+      .then(([user, repos]: [{ public_repos: number }, { pushed_at: string; language: string | null; fork: boolean }[]]) => {
         if (cancelled) return;
         const own = repos.filter((r) => !r.fork);
         setStats({
@@ -43,57 +43,64 @@ export function GithubStats() {
   }, []);
 
   const cells = [
-    { label: "Public repositories", value: stats.repos },
-    { label: `Updated in ${new Date().getFullYear()}`, value: stats.activeThisYear },
+    { label: "public repositories", value: stats.repos },
+    { label: `updated in ${new Date().getFullYear()}`, value: stats.activeThisYear },
   ];
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-end">
+    <div className="grid gap-6 rounded-[1.75rem] border bg-card p-6 shadow-paper sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-12">
       <div>
-        <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em]">
-          <span className={`size-1.5 rounded-full ${live ? "bg-emerald-400" : "bg-white/40"}`} />
-          GitHub · {live ? "live data" : "cached"}
+        <p className="inline-flex items-center gap-2 rounded-full border bg-background/70 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+          <span className={`size-1.5 rounded-full ${live ? "bg-emerald-500" : "bg-foreground/30"}`} />
+          GitHub · {live ? "live from the API" : "cached"}
         </p>
-        <h2 className="mt-6 text-[clamp(2.6rem,6vw,5rem)] font-extrabold leading-[0.92] tracking-tighter">
-          Built in the open,
-          <br />
-          <span className="font-serif text-[1.08em] font-normal italic tracking-tight text-muted-foreground">commit by commit.</span>
+        <h2 className="mt-5 font-heading text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+          Built in the open, commit by commit.
         </h2>
-        <p className="mt-6 max-w-[46ch] text-muted-foreground">
-          These numbers come straight from the public GitHub API when the page loads. The language breakdown is taken from my own repositories.
+        <p className="mt-4 max-w-[46ch] text-muted-foreground">
+          These numbers come from the public GitHub API when the page loads. Most of the projects above link straight to their code.
         </p>
         <a
           href={`https://github.com/${USER}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-black hover:bg-ember"
+          className="group mt-7 inline-flex h-11 items-center gap-2 rounded-full bg-foreground px-5 text-sm font-semibold text-background transition-transform hover:-translate-y-0.5"
         >
-          github.com/{USER} <ArrowUpRight className="size-4" />
+          github.com/{USER}
+          <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </a>
       </div>
-      <div className="rounded-3xl border border-white/10 bg-card p-6 sm:p-8">
-        <dl className="grid grid-cols-2 divide-x divide-white/10">
+
+      <div className="rounded-2xl border border-dashed bg-background/60 p-5 sm:p-7">
+        <dl className="grid grid-cols-2 gap-4">
           {cells.map((c) => (
-            <div key={c.label} className="px-3 first:pl-0 last:pr-0">
-              <dd className="text-[clamp(2.2rem,5vw,3.6rem)] font-extrabold leading-none tracking-tighter">
+            <div key={c.label}>
+              <dd className="font-heading text-[clamp(2.4rem,5vw,3.4rem)] font-bold leading-none tracking-[-0.04em]">
                 <CountUp value={c.value} />
               </dd>
-              <dt className="mt-2 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">{c.label}</dt>
+              <dt className="mt-2 text-sm text-muted-foreground">{c.label}</dt>
             </div>
           ))}
         </dl>
-        <div className="mt-8 grid gap-4 border-t border-white/10 pt-6 font-mono text-xs sm:grid-cols-2">
+        <div className="mt-6 grid gap-4 border-t border-dashed pt-5 text-sm sm:grid-cols-2">
           <div>
-            <p className="uppercase tracking-[0.16em] text-muted-foreground">Last push</p>
-            <p className="mt-1 text-foreground">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Last push</p>
+            <p className="mt-1 flex items-center gap-1.5 font-medium">
+              <GitCommitHorizontal className="size-4 text-primary" aria-hidden />
               {stats.lastPush
                 ? new Date(stats.lastPush).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
                 : "—"}
             </p>
           </div>
           <div>
-            <p className="uppercase tracking-[0.16em] text-muted-foreground">Languages</p>
-            <p className="mt-1 text-foreground">{stats.languages.join(" · ") || "—"}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Languages</p>
+            <ul className="mt-1.5 flex flex-wrap gap-1.5">
+              {stats.languages.slice(0, 6).map((l) => (
+                <li key={l} className="rounded-md border bg-card px-2 py-0.5 font-mono text-[11px]">
+                  {l}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

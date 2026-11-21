@@ -85,18 +85,21 @@ export function HandNote({
         ? { whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-10% 0px" } }
         : { animate: play ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 } })}
       transition={{ duration: 0.5, delay: delay + (arrowFirst ? 0.6 : 0) }}
-      className="font-hand text-[1.35rem] leading-[1.05] text-ember/90"
+      className="font-hand text-[1.35rem] leading-[1.05] text-pen"
     >
       {children}
     </motion.span>
   );
   const drawn = arrow && (
-    <HandArrow dir={arrow} play={play} delay={delay + (arrowFirst ? 0 : 0.35)} className="shrink-0 text-ember/70" />
+    <HandArrow dir={arrow} play={play} delay={delay + (arrowFirst ? 0 : 0.35)} className="shrink-0 text-pen/75" />
   );
+  // positioning and visibility (e.g. "hidden lg:inline-flex") go on the outer span, the tilt on the inner one
   return (
-    <span className={`pointer-events-none inline-flex select-none items-end gap-1 ${className}`} style={{ rotate: `${rotate}deg` }}>
-      {arrowFirst ? drawn : text}
-      {arrowFirst ? text : drawn}
+    <span className={`pointer-events-none select-none ${className}`}>
+      <span className="inline-flex items-end gap-1" style={{ rotate: `${rotate}deg` }}>
+        {arrowFirst ? drawn : text}
+        {arrowFirst ? text : drawn}
+      </span>
     </span>
   );
 }
@@ -106,7 +109,7 @@ export function HandUnderline({ children, delay = 0.2 }: { children: React.React
   return (
     <span className="relative inline-block whitespace-nowrap">
       {children}
-      <svg viewBox="0 0 120 14" preserveAspectRatio="none" aria-hidden className="absolute -bottom-[0.28em] left-[-4%] h-[0.4em] w-[108%] overflow-visible text-ember">
+      <svg viewBox="0 0 120 14" preserveAspectRatio="none" aria-hidden className="absolute -bottom-[0.28em] left-[-4%] h-[0.4em] w-[108%] overflow-visible text-pen">
         <motion.path
           d="M2 9 C 22 3, 48 12, 72 6 S 108 4, 118 8"
           stroke="currentColor"
