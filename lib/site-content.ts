@@ -15,7 +15,7 @@ export const HERO = {
   lead: "I build data & AI projects that make it",
   highlight: "out of the notebook.",
   intro:
-    "Final-year B.Tech CSE student at UPES Dehradun, specialising in Data Science & AI/ML and graduating in 2027. I like forecasting, experiments and retrieval-augmented AI, and most of my projects ship with a live demo you can try.",
+    "Final-year B.Tech CSE student at UPES Dehradun, specialising in Data Science & AI/ML and graduating in 2027. I like forecasting, experiments and retrieval-augmented AI, and several of my projects ship with a live demo you can try.",
 };
 
 /**

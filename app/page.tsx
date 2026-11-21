@@ -126,7 +126,7 @@ export default function Home() {
               n="02"
               label="Projects"
               title="Things I’ve built"
-              intro="From forecasting and experiments to RAG agents and full-stack apps. Most of them have a live demo; open any card for the full story."
+              intro="From forecasting and experiments to generative vision, RAG agents and full-stack apps. Several have a live demo; open any card for the full story."
             />
             <Projects />
           </div>

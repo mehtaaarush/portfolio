@@ -83,6 +83,27 @@ export const works: Work[] = [
     shot: { src: "/work/retail-analytics.webp", alt: "Customer analytics dashboard showing £9.29M net revenue with orders and average order value", width: 1400, height: 1475, position: "left top" },
   },
   {
+    slug: "cloud-removal",
+    kind: "Major project · Generative vision",
+    title: "Cloud removal from satellite images",
+    period: "2026",
+    summary:
+      "A generative model that removes clouds from satellite images and maps how sure it is about every pixel.",
+    blurb:
+      "My major project: a Fourier, uncertainty-aware generative model. A SwinIR branch with Fourier Units handles the global picture, a TransGAN branch the local detail, and the two are fused band by band with wavelets. An uncertainty head predicts the expected error at each pixel and weights the adversarial loss, so the model invents content only where the ground is hidden. Trained on RICE1 (haze) and RICE2 (thick cloud), with a Flask demo.",
+    areas: ["ai"],
+    metric: { value: "35.6 dB", label: "PSNR on RICE1 test (cloudy input: 19.2)" },
+    stack: ["PyTorch", "SwinIR", "TransGAN", "Wavelets", "Flask"],
+    code: "https://github.com/mehtaaarush/Major-Project",
+    shot: {
+      src: "/work/cloud-removal.webp",
+      alt: "A cloudy RICE2 test image, the model's cloud-free output and its predicted uncertainty map, side by side",
+      width: 1280,
+      height: 800,
+      frame: "figure",
+    },
+  },
+  {
     slug: "vision-nav",
     kind: "Computer vision · IIT Roorkee",
     title: "Vision-Nav: GPS-free UAV localization",
@@ -146,6 +167,49 @@ export const works: Work[] = [
     metric: { value: "1.0", label: "faithfulness, zero hallucination" },
     stack: ["LangChain", "LangGraph", "FAISS", "Gemini", "Tavily"],
     code: "https://github.com/mehtaaarush/agentic-rag-assistant",
+  },
+  {
+    slug: "deeplure",
+    kind: "Computer vision · metric learning",
+    title: "Colour-invariant saree design recognition",
+    period: "2026",
+    summary:
+      "Face recognition for textiles: recognises a saree's design whatever colours it was woven in.",
+    blurb:
+      "A 128-d embedding that captures a saree's design (motifs, layout, weave) and ignores its colourway. Each training image is split into colour regions and repainted with new palettes, and a MobileNetV3 is trained with a supervised contrastive loss. On held-out real sarees it reaches a core AUC of 0.89, against 0.66 for zero-shot DINOv2, at about 10 ms per image on a CPU.",
+    areas: ["ai"],
+    metric: { value: "0.89", label: "core AUC (zero-shot DINOv2: 0.66)" },
+    stack: ["PyTorch", "MobileNetV3", "Metric learning", "SupCon loss", "DINOv2"],
+    code: "https://github.com/mehtaaarush/deeplure",
+    shot: {
+      src: "/work/deeplure.webp",
+      alt: "Verification ROC curves comparing the trained embedding with zero-shot and colour-histogram baselines",
+      width: 1430,
+      height: 585,
+      frame: "figure",
+      plot: true,
+      caption: "verification ROC",
+    },
+  },
+  {
+    slug: "ai-receptionist",
+    kind: "Full-stack GenAI",
+    title: "AI Receptionist for small businesses",
+    period: "2026",
+    summary:
+      "A chat assistant for clinic and shop websites that answers questions and turns visitors into booking requests.",
+    blurb:
+      "A Node.js server plus a chat widget that goes on any site with one script tag. The assistant answers from one JSON file per business (hours, prices, policies) and books appointments through a validated tool call. Leads land on a password-protected dashboard or a Google Sheet. It runs on Claude or Gemini, streams replies, and rate-limits each visitor to keep costs predictable.",
+    areas: ["ai", "web"],
+    metric: { value: "1 tag", label: "to add it to any website" },
+    stack: ["Node.js", "Express", "Claude API", "Gemini API", "Tool calling"],
+    code: "https://github.com/mehtaaarush/ai-receptionist",
+    shot: {
+      src: "/work/ai-receptionist.webp",
+      alt: "Demo dental clinic website with the AI assistant's chat window open, offering suggested questions",
+      width: 1400,
+      height: 875,
+    },
   },
   {
     slug: "fraud",
@@ -216,9 +280,9 @@ export const featured = works.filter((w) => !["path-planning", "deploy"].include
 
 export const skills: { group: string; items: string[] }[] = [
   { group: "Data science", items: ["NumPy", "Pandas", "SciPy", "Statsmodels", "Scikit-Learn", "XGBoost", "DuckDB", "Matplotlib", "Plotly", "EDA", "A/B testing", "Uplift modelling", "Time-series forecasting", "Power BI"] },
-  { group: "Generative AI", items: ["LLMs", "RAG", "LangChain", "LangGraph", "AI agents", "Tool calling", "FAISS", "Embeddings", "Prompt engineering", "LLM evaluation", "Gemini API"] },
-  { group: "Vision & deep learning", items: ["PyTorch", "OpenCV", "Transformers", "ViT", "DINOv2", "Swin Transformer", "GANs", "Transfer learning"] },
-  { group: "Web & deployment", items: ["Next.js", "React", "Tailwind CSS", "FastAPI", "Docker", "PostgreSQL", "SQLAlchemy", "Alembic", "Vercel", "Render", "Git"] },
+  { group: "Generative AI", items: ["LLMs", "RAG", "LangChain", "LangGraph", "AI agents", "Tool calling", "FAISS", "Embeddings", "Prompt engineering", "LLM evaluation", "Gemini API", "Claude API"] },
+  { group: "Vision & deep learning", items: ["PyTorch", "OpenCV", "Transformers", "ViT", "DINOv2", "Swin Transformer", "GANs", "Metric learning", "Transfer learning"] },
+  { group: "Web & deployment", items: ["Next.js", "React", "Tailwind CSS", "Node.js", "Express", "FastAPI", "Docker", "PostgreSQL", "SQLAlchemy", "Alembic", "Vercel", "Render", "Git"] },
   { group: "Languages & core CS", items: ["Python", "Java", "C", "SQL", "TypeScript", "JavaScript", "DSA", "DBMS", "OS", "Networks"] },
 ];
 

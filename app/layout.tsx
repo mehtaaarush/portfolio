@@ -29,7 +29,7 @@ const hand = Caveat({
 export const metadata: Metadata = {
   title: "Aarush Mehta · Data Science & AI/ML student, Class of 2027",
   description:
-    "Aarush Mehta is a final-year B.Tech CSE student at UPES Dehradun (Data Science & AI/ML, Class of 2027) building forecasting, experimentation, analytics and retrieval-augmented AI projects, most with live demos.",
+    "Aarush Mehta is a final-year B.Tech CSE student at UPES Dehradun (Data Science & AI/ML, Class of 2027) building forecasting, experimentation, analytics and retrieval-augmented AI projects, several with live demos.",
 };
 
 export const viewport: Viewport = {
