@@ -33,11 +33,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f7f5ef",
+  themeColor: "#07080d",
 };
 
-/* Runs before first paint so a saved dark theme never flashes light. Light is the default. */
-const themeScript = `try{if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}`;
+/* Runs before first paint so the page never flashes the wrong theme. Dark is the default; light only if the visitor picked it. */
+const themeScript = `var d=document.documentElement;try{if(localStorage.getItem("theme")!=="light")d.classList.add("dark")}catch(e){d.classList.add("dark")}`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

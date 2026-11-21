@@ -1,8 +1,16 @@
 export interface Screenshot {
   src: string;
   alt: string;
+  width: number;
+  height: number;
+  /** "site": a live page in a browser frame that scrolls on hover. "figure": an image or plot from the repo. */
+  frame?: "site" | "figure";
   /** CSS object-position; a dashboard screenshot keeps its top-left corner, where the title is, in view */
   position?: string;
+  /** a white-background plot: shown as a notebook output, inverted in the dark theme */
+  plot?: boolean;
+  /** small label in the corner of a figure */
+  caption?: string;
 }
 
 /** Filter groups on the projects grid. */
@@ -21,7 +29,7 @@ export interface Work {
   stack: string[];
   live?: string;
   code?: string;
-  /** a real screenshot of the live project; projects without one get a typographic cover */
+  /** a screenshot of the live project or an image from its repo; projects without one get a drawn cover */
   shot?: Screenshot;
 }
 
@@ -40,7 +48,7 @@ export const works: Work[] = [
     stack: ["Scikit-Learn", "Pandas", "Time series", "Plotly", "REST APIs"],
     live: "https://mehtaaarush.github.io/transit-ridership-forecasting/",
     code: "https://github.com/mehtaaarush/transit-ridership-forecasting",
-    shot: { src: "/work/transit-ridership.webp", alt: "Ridership forecasting dashboard showing a 4.3% forecast error and recent ridership figures", position: "left top" },
+    shot: { src: "/work/transit-ridership.webp", alt: "Ridership forecasting dashboard showing a 4.3% forecast error and recent ridership figures", width: 1400, height: 1475, position: "left top" },
   },
   {
     slug: "ab-uplift",
@@ -56,7 +64,7 @@ export const works: Work[] = [
     stack: ["Statsmodels", "SciPy", "Scikit-Learn", "Uplift modelling", "Plotly"],
     live: "https://mehtaaarush.github.io/ab-testing-uplift-modeling/",
     code: "https://github.com/mehtaaarush/ab-testing-uplift-modeling",
-    shot: { src: "/work/ab-uplift.webp", alt: "Experiment dashboard showing a $0.77 revenue lift per customer and passed randomisation checks", position: "left top" },
+    shot: { src: "/work/ab-uplift.webp", alt: "Experiment dashboard showing a $0.77 revenue lift per customer and passed randomisation checks", width: 1400, height: 1475, position: "left top" },
   },
   {
     slug: "retail-analytics",
@@ -72,7 +80,7 @@ export const works: Work[] = [
     stack: ["SQL", "DuckDB", "Pandas", "Scikit-Learn", "Plotly"],
     live: "https://mehtaaarush.github.io/ecommerce-customer-analytics/",
     code: "https://github.com/mehtaaarush/ecommerce-customer-analytics",
-    shot: { src: "/work/retail-analytics.webp", alt: "Customer analytics dashboard showing £9.29M net revenue with orders and average order value", position: "left top" },
+    shot: { src: "/work/retail-analytics.webp", alt: "Customer analytics dashboard showing £9.29M net revenue with orders and average order value", width: 1400, height: 1475, position: "left top" },
   },
   {
     slug: "vision-nav",
@@ -87,6 +95,14 @@ export const works: Work[] = [
     metric: { value: "<1 ms", label: "FAISS tile retrieval" },
     stack: ["PyTorch", "DINOv2", "EfficientLoFTR", "FAISS", "OpenCV"],
     code: "https://github.com/mehtaaarush/uav-gps-free-localization",
+    shot: {
+      src: "/work/vision-nav.webp",
+      alt: "Aerial map of the IIT Roorkee campus with building, junction, court and complex landmarks marked for localization",
+      width: 1400,
+      height: 658,
+      frame: "figure",
+      caption: "landmark map · IIT Roorkee",
+    },
   },
   {
     slug: "path-planning",
@@ -115,6 +131,7 @@ export const works: Work[] = [
     stack: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Gemini"],
     live: "https://docintel-ashen.vercel.app",
     code: "https://github.com/mehtaaarush/docintel",
+    shot: { src: "/work/docintel.webp", alt: "DocIntel home page: Ask your documents anything, with a drag-and-drop upload box", width: 1400, height: 875 },
   },
   {
     slug: "agentic-rag",
@@ -143,6 +160,15 @@ export const works: Work[] = [
     metric: { value: "284,807", label: "transactions modelled" },
     stack: ["Scikit-Learn", "SMOTE", "Pandas", "Random Forest"],
     code: "https://github.com/mehtaaarush/Credit-Card-Fraud-Detection",
+    shot: {
+      src: "/work/fraud.webp",
+      alt: "Two notebook plots: the class distribution, where fraud is a sliver next to normal transactions, and a ROC curve hugging the top-left corner",
+      width: 1236,
+      height: 503,
+      frame: "figure",
+      plot: true,
+      caption: "notebook output",
+    },
   },
   {
     slug: "olist-dashboard",
@@ -181,6 +207,7 @@ export const works: Work[] = [
     areas: ["web"],
     stack: ["WordPress", "HTML", "CSS", "MS Excel"],
     live: "https://indianeers.org",
+    shot: { src: "/work/indianeers.webp", alt: "indianeers.org home page: India’s Youth. United. Skilled. Ready.", width: 1400, height: 875 },
   },
 ];
 
@@ -215,5 +242,5 @@ export const links = {
   email: "aarushmehta902@gmail.com",
   github: "https://github.com/mehtaaarush",
   linkedin: "https://linkedin.com/in/aarushmehta",
-  leetcode: "https://leetcode.com/u/Aarush902/",
+  leetcode: "https://leetcode.com/u/mehtaaarush/",
 };

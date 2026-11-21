@@ -44,8 +44,11 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
 
 /* ------------------------------------------------------------------ */
 
-function Shot({ work, large }: { work: Work; large?: boolean }) {
+/** A live page in a browser frame. Tall pages scroll to the bottom on hover. */
+function SiteShot({ work, large }: { work: Work; large?: boolean }) {
   const shot = work.shot!;
+  const frame = large ? 9 / 16 : 10 / 16;
+  const pan = Math.max(0, 1 - frame / (shot.height / shot.width)) * 100;
   return (
     <div className="border-b bg-secondary/70">
       <div className="flex items-center gap-2 px-3 py-2">
@@ -62,12 +65,96 @@ function Shot({ work, large }: { work: Work; large?: boolean }) {
         <Image
           src={shot.src}
           alt={shot.alt}
-          width={1400}
-          height={1475}
+          width={shot.width}
+          height={shot.height}
           sizes={large ? "(min-width: 800px) 768px, 100vw" : "(min-width: 1024px) 370px, (min-width: 640px) 46vw, 92vw"}
-          className="h-auto w-full transition-transform duration-[2600ms] ease-[cubic-bezier(0.45,0,0.2,1)] group-hover:-translate-y-[38%]"
+          style={{ "--pan": `-${pan.toFixed(1)}%` } as React.CSSProperties}
+          className="h-auto w-full transition-transform duration-[2600ms] ease-[cubic-bezier(0.45,0,0.2,1)] group-hover:translate-y-[var(--pan)]"
         />
       </div>
+    </div>
+  );
+}
+
+/** An image or plot from the project's repo. Plots on white read as notebook output and flip to dark with the theme. */
+function FigureShot({ work, large }: { work: Work; large?: boolean }) {
+  const shot = work.shot!;
+  const sizes = large ? "(min-width: 800px) 768px, 100vw" : "(min-width: 1024px) 370px, (min-width: 640px) 46vw, 92vw";
+  return (
+    <div className={`relative overflow-hidden border-b ${large ? "aspect-[16/9]" : "aspect-[16/10]"}`}>
+      {shot.plot ? (
+        <div className="absolute inset-0 isolate bg-white transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] dark:hue-rotate-180 dark:invert">
+          <Image src={shot.src} alt={shot.alt} fill sizes={sizes} className="object-contain p-3 mix-blend-multiply sm:p-4" />
+        </div>
+      ) : (
+        <Image
+          src={shot.src}
+          alt={shot.alt}
+          fill
+          sizes={sizes}
+          style={{ objectPosition: shot.position ?? "center" }}
+          className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
+        />
+      )}
+      {shot.caption && (
+        <span className="glass absolute bottom-2.5 left-2.5 backdrop-blur-md rounded-md border border-foreground/10 px-2 py-0.5 font-mono text-[10px] text-foreground/80">
+          {shot.caption}
+        </span>
+      )}
+    </div>
+  );
+}
+
+/* the agent's own evaluation run, from eval_results.json in the repo */
+const RAG_EVAL = [
+  { q: "Swin: shifted windows", f: "1.00" },
+  { q: "DINOv2: visual features", f: "1.00" },
+  { q: "GANs: the core idea", f: "1.00" },
+  { q: "Why self-attention", f: "1.00" },
+  { q: "CLIP: how it's trained", f: "1.00" },
+];
+
+/** A terminal replaying the RAG agent's LLM-as-judge evaluation. */
+function TerminalCover({ large }: { large?: boolean }) {
+  const rows = [
+    <span key="cmd">
+      <span className="text-[#8f9dff]">$</span> python src/evaluate.py
+    </span>,
+    ...RAG_EVAL.map((r) => (
+      <span key={r.q} className="flex gap-2">
+        <span className="text-[#c3e88d]">✓</span>
+        <span className="min-w-0 flex-1 truncate text-white/75">{r.q}</span>
+        <span className="text-white/40">faithful</span>
+        <span className="text-[#ffcb6b]">{r.f}</span>
+      </span>
+    )),
+    <span key="avg" className="mt-1 block border-t border-dashed border-white/15 pt-1.5 text-white/90">
+      avg faithfulness <span className="text-[#c3e88d]">1.00</span> · relevancy <span className="text-[#ffcb6b]">0.75</span>
+    </span>,
+  ];
+  return (
+    <div className={`relative overflow-hidden border-b bg-[#0b0d15] ${large ? "aspect-[16/9] sm:aspect-[16/7]" : "aspect-[16/10]"}`}>
+      <div className="flex items-center gap-1.5 border-b border-white/[0.07] px-3 py-2" aria-hidden>
+        <span className="size-2 rounded-full bg-white/15" />
+        <span className="size-2 rounded-full bg-white/15" />
+        <span className="size-2 rounded-full bg-white/15" />
+        <span className="ml-2 font-mono text-[10px] text-white/40">agentic-rag-assistant · zsh</span>
+      </div>
+      <motion.div
+        aria-hidden
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } }}
+        className={`flex flex-col gap-1 px-4 py-3 font-mono leading-snug text-white/85 ${large ? "text-[13px] sm:px-6 sm:py-5" : "text-[10.5px]"}`}
+      >
+        {rows.map((row, i) => (
+          <motion.span key={i} variants={{ hidden: { opacity: 0, y: 4 }, show: { opacity: 1, y: 0 } }} className="block">
+            {row}
+          </motion.span>
+        ))}
+      </motion.div>
+      <p className="sr-only">Evaluation run: five test questions, each answered with faithfulness 1.0; average relevancy 0.75.</p>
     </div>
   );
 }
@@ -99,8 +186,11 @@ function TypeCover({ work, large }: { work: Work; large?: boolean }) {
   );
 }
 
-const Cover = ({ work, large }: { work: Work; large?: boolean }) =>
-  work.shot ? <Shot work={work} large={large} /> : <TypeCover work={work} large={large} />;
+function Cover({ work, large }: { work: Work; large?: boolean }) {
+  if (work.shot) return work.shot.frame === "figure" ? <FigureShot work={work} large={large} /> : <SiteShot work={work} large={large} />;
+  if (work.slug === "agentic-rag") return <TerminalCover large={large} />;
+  return <TypeCover work={work} large={large} />;
+}
 
 function ExtLink({ href, children, className = "" }: { href: string; children: React.ReactNode; className?: string }) {
   return (

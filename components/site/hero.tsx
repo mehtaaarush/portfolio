@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ChartSpline, FlaskConical, type LucideIcon } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 
@@ -13,33 +13,37 @@ import { AVAILABILITY, HERO } from "@/lib/site-content";
 /* The hero text enters with a CSS animation (.rise in globals.css), so it shows on first paint without waiting for JavaScript. */
 const delay = (s: number) => ({ animationDelay: `${s}s` });
 
-function StickyNote({
-  children,
+/** A frosted stat chip that drops onto the photo, then floats gently. */
+function StatChip({
+  value,
+  label,
+  icon: Icon,
   className,
   rotate,
   delay,
-  tone = "yellow",
 }: {
-  children: React.ReactNode;
+  value: string;
+  label: string;
+  icon: LucideIcon;
   className: string;
   rotate: number;
   delay: number;
-  tone?: "yellow" | "blue";
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 1.25, rotate: rotate * 3 }}
+      initial={{ opacity: 0, scale: 1.2, rotate: rotate * 3 }}
       animate={{ opacity: 1, scale: 1, rotate }}
-      transition={{ type: "spring", stiffness: 260, damping: 16, delay }}
+      transition={{ type: "spring", stiffness: 240, damping: 18, delay }}
       className={`absolute z-10 ${className}`}
     >
-      <div
-        className={`bob rounded-[3px] px-3.5 py-3 shadow-paper ${
-          tone === "yellow" ? "bg-sticky" : "bg-tint-ai"
-        }`}
-        style={{ animationDelay: `${delay}s` }}
-      >
-        {children}
+      <div className="bob glass flex items-center backdrop-blur-md backdrop-saturate-150 gap-3 rounded-2xl border border-foreground/10 py-2.5 pl-2.5 pr-4 shadow-lift" style={{ animationDelay: `${delay}s` }}>
+        <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary" aria-hidden>
+          <Icon className="size-[18px]" />
+        </span>
+        <span>
+          <span className="block font-heading text-xl font-bold leading-none tracking-tight">{value}</span>
+          <span className="mt-1 block max-w-[15ch] font-mono text-[9.5px] uppercase leading-snug tracking-wide text-muted-foreground">{label}</span>
+        </span>
       </div>
     </motion.div>
   );
@@ -81,14 +85,8 @@ function Polaroid() {
         </figure>
       </motion.div>
 
-      <StickyNote rotate={-6} delay={1.0} className="-left-6 top-8 sm:-left-16">
-        <p className="font-heading text-2xl font-bold leading-none tracking-tight text-foreground">4.3%</p>
-        <p className="mt-1 max-w-[12ch] font-mono text-[10px] uppercase leading-snug tracking-wide text-muted-foreground">forecast error (WAPE), ridership</p>
-      </StickyNote>
-      <StickyNote rotate={5} delay={1.2} tone="blue" className="-right-5 bottom-24 sm:-right-12">
-        <p className="font-heading text-2xl font-bold leading-none tracking-tight text-foreground">+$0.77</p>
-        <p className="mt-1 max-w-[12ch] font-mono text-[10px] uppercase leading-snug tracking-wide text-muted-foreground">lift per customer, A/B test</p>
-      </StickyNote>
+      <StatChip value="4.3%" label="forecast error (WAPE), ridership" icon={ChartSpline} rotate={-4} delay={1.0} className="-left-6 top-8 sm:-left-20" />
+      <StatChip value="+$0.77" label="lift per customer, A/B test" icon={FlaskConical} rotate={3} delay={1.2} className="-right-4 bottom-20 sm:-right-14" />
     </div>
   );
 }
@@ -148,6 +146,7 @@ export function Hero() {
               {[
                 ["GitHub", links.github],
                 ["LinkedIn", links.linkedin],
+                ["LeetCode", links.leetcode],
               ].map(([label, href]) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-0.5 transition-colors hover:text-foreground">
                   {label}

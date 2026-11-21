@@ -1,27 +1,21 @@
 import { ArrowUp, Award, BrainCircuit, ChartSpline, Code, Layers, Rocket, ScanEye, type LucideIcon } from "lucide-react";
 
+import { CodeCard } from "@/components/site/code-card";
 import { Contact } from "@/components/site/contact";
-import { CountUp } from "@/components/site/count-up";
 import { GithubStats } from "@/components/site/github-stats";
 import { Signature } from "@/components/site/hand";
 import { Hero } from "@/components/site/hero";
+import { LeetCodeCard } from "@/components/site/leetcode-card";
 import { Marker } from "@/components/site/marker";
 import { Nav } from "@/components/site/nav";
-import { NowCard } from "@/components/site/now-card";
 import { Projects } from "@/components/site/projects";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/reveal";
 import { ScrollProgress } from "@/components/site/scroll-progress";
 import { SectionHeading } from "@/components/site/section-heading";
 import { SmoothScroll } from "@/components/site/smooth-scroll";
 import { Timeline } from "@/components/site/timeline";
-import { certifications, featured, skills } from "@/lib/portfolio";
-
-const facts = [
-  { value: featured.length, label: "projects on this page" },
-  { value: featured.filter((w) => w.live).length, label: "with a live demo" },
-  { value: 2, label: "internships, incl. IIT Roorkee" },
-  { value: 2027, from: 2023, label: "graduating, B.Tech CSE" },
-];
+import { ToolStrip } from "@/components/site/tool-strip";
+import { certifications, skills } from "@/lib/portfolio";
 
 const focus: { icon: LucideIcon; title: string; text: string; tags: string[] }[] = [
   {
@@ -52,7 +46,8 @@ const SKILL_ICONS: Record<string, LucideIcon> = {
   "Languages & core CS": Code,
 };
 
-const tape = ["Python", "SQL", "Pandas", "Scikit-Learn", "XGBoost", "Statsmodels", "PyTorch", "LangGraph", "FAISS", "DuckDB", "Plotly", "FastAPI", "Next.js", "Docker"];
+/* re-render twice a day so the LeetCode count stays current */
+export const revalidate = 43200;
 
 export default function Home() {
   return (
@@ -64,24 +59,12 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
 
-        {/* at a glance */}
-        <section aria-label="At a glance" className="px-5 pt-14 sm:px-8 sm:pt-20">
-          <Stagger className="mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden rounded-2xl border bg-border shadow-paper md:grid-cols-4">
-            {facts.map((f) => (
-              <StaggerItem key={f.label} className="bg-card p-5 sm:p-7">
-                <p className="font-heading text-[clamp(2.2rem,4.4vw,3.2rem)] font-bold leading-none tracking-[-0.04em]">
-                  <CountUp value={f.value} from={f.from} />
-                </p>
-                <p className="mt-2 text-sm text-muted-foreground">{f.label}</p>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </section>
+        <ToolStrip />
 
         {/* about */}
         <section id="about" className="px-5 pt-28 sm:px-8 sm:pt-36">
           <div className="mx-auto max-w-6xl">
-            <div className="grid gap-14 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16">
+            <div className="grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
               <div>
                 <SectionHeading
                   n="01"
@@ -105,8 +88,8 @@ export default function Home() {
                   <Signature className="pt-2 text-[2.2rem] text-foreground" />
                 </Reveal>
               </div>
-              <Reveal delay={0.2} className="lg:pt-10">
-                <NowCard />
+              <Reveal delay={0.2} className="min-w-0 lg:pt-10">
+                <CodeCard />
               </Reveal>
             </div>
 
@@ -162,30 +145,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* masking-tape marquee */}
-        <div className="overflow-hidden py-24 sm:py-32">
-          <p className="sr-only">Tools I use most: {tape.join(", ")}</p>
-          <div
-            aria-hidden
-            className="relative left-1/2 w-[120vw] -translate-x-1/2 -rotate-2 border-y border-[#16213a]/10 bg-[#ffe27a] py-3.5 text-[#16213a] shadow-paper dark:bg-[#e8cd5c]"
-          >
-            <div className="marquee flex w-max">
-              {[0, 1].map((k) => (
-                <div key={k} className="flex shrink-0 items-center">
-                  {tape.map((t) => (
-                    <span key={t} className="flex items-center gap-7 pr-7 font-heading text-xl font-semibold tracking-[-0.01em] sm:text-2xl">
-                      {t}
-                      <span className="text-[#16213a]/35">✦</span>
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
         {/* skills */}
-        <section id="skills" className="px-5 sm:px-8">
+        <section id="skills" className="px-5 pt-28 sm:px-8 sm:pt-36">
           <div className="mx-auto max-w-6xl">
             <SectionHeading n="04" label="Skills" title="My toolkit" intro="The libraries and tools I reach for, grouped by what I use them for." />
             <Stagger className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -242,6 +203,9 @@ export default function Home() {
           <div className="mx-auto max-w-6xl">
             <Reveal>
               <GithubStats />
+            </Reveal>
+            <Reveal delay={0.1} className="mt-6">
+              <LeetCodeCard />
             </Reveal>
           </div>
         </section>

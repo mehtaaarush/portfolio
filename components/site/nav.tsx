@@ -2,6 +2,7 @@
 
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { ThemeToggle } from "@/components/site/theme-toggle";
@@ -61,8 +62,16 @@ export function Nav() {
         }`}
       >
         <a href="#top" className="group flex items-center gap-2.5" aria-label="Aarush Mehta, back to top">
-          <span className="grid size-9 place-items-center rounded-xl bg-foreground font-heading text-sm font-bold text-background transition-transform duration-300 group-hover:-rotate-6">
-            AM
+          <span className="relative shrink-0 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105">
+            <Image
+              src="/aarush-avatar.webp"
+              alt=""
+              width={36}
+              height={36}
+              loading="eager"
+              className="size-9 rounded-full object-cover ring-2 ring-primary/50 ring-offset-2 ring-offset-background"
+            />
+            <span aria-hidden className="absolute -bottom-0.5 -right-0.5 size-3 rounded-full border-2 border-background bg-emerald-500" />
           </span>
           <span className="leading-tight">
             <span className="block font-heading text-[15px] font-semibold">Aarush Mehta</span>

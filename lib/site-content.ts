@@ -18,10 +18,19 @@ export const HERO = {
     "Final-year B.Tech CSE student at UPES Dehradun, specialising in Data Science & AI/ML and graduating in 2027. I like forecasting, experiments and retrieval-augmented AI, and most of my projects ship with a live demo you can try.",
 };
 
-/** The "Currently" card in the About section. `done: true` draws a tick in the box. */
+/**
+ * The "aarush.py" code card in the About section.
+ * `now` is what I'm up to; `done: true` marks an item with a "# done" comment.
+ */
+export const PROFILE = {
+  university: "UPES Dehradun",
+  degree: "B.Tech CSE (DS & AI/ML)",
+  graduating: 2027,
+};
+
 export const NOW: { text: string; done?: boolean }[] = [
-  { text: "shipped three data science case studies, each with a live dashboard", done: true },
+  { text: "shipped 3 data science case studies", done: true },
   { text: "sharpening DSA, one problem at a time" },
-  { text: "next up: hybrid search for my RAG agent" },
-  { text: "going deeper on tool-calling agents & LLM evals" },
+  { text: "hybrid search for my RAG agent" },
+  { text: "tool-calling agents & LLM evals" },
 ];

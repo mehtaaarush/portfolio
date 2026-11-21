@@ -13,7 +13,7 @@ const isDark = () => document.documentElement.classList.contains("dark");
 
 function setTheme(dark: boolean) {
   document.documentElement.classList.toggle("dark", dark);
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#0e1322" : "#f7f5ef");
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#07080d" : "#f7f5ef");
   try {
     localStorage.setItem("theme", dark ? "dark" : "light");
   } catch {
@@ -23,7 +23,7 @@ function setTheme(dark: boolean) {
 
 /** Light/dark switch. The new theme grows out of the button as a circle where View Transitions are supported. */
 export function ThemeToggle({ className = "" }: { className?: string }) {
-  const dark = useSyncExternalStore(subscribe, isDark, () => false);
+  const dark = useSyncExternalStore(subscribe, isDark, () => true);
 
   const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     const next = !dark;
