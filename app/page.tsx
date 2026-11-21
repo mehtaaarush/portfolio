@@ -30,6 +30,7 @@ const journey = [
   { when: "Jun – Jul 2024", title: "Web Development Intern", org: "Indianeers Private Ltd", text: "Designed and deployed the company website, indianeers.org, and restructured Excel data models for faster retrieval." },
   { when: "2026", title: "Shipped DocIntel & Agentic RAG", org: "Independent projects", text: "A deployed three-tier document Q&A platform, plus a LangGraph research agent that scored 1.0 on faithfulness." },
   { when: "Jun – Jul 2026", title: "Research Intern", org: "IIT Roorkee", text: "Built a vision-based localization pipeline using DINOv2 embeddings and FAISS retrieval, with A* path planning and optical-flow fusion." },
+  { when: "Nov 2026", title: "Three data science case studies", org: "Independent projects", text: "Ridership forecasting, an A/B test with uplift modelling and e-commerce customer analytics in SQL and Python, each published with a live dashboard." },
   { when: "2027", title: "Graduating", org: "UPES Dehradun", text: "Looking for SWE and ML roles where I can ship AI systems end to end." },
 ];
 

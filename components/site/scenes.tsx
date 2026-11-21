@@ -278,7 +278,7 @@ export function AboutScene() {
 
             <div>
               <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
-                I&apos;m a CS undergrad at UPES Dehradun, majoring in Data Science &amp; AI/ML and graduating in 2027. What pulled me into AI was the gap between a cool demo and something you can actually rely on. So far that&apos;s meant a document Q&amp;A app that would rather say &ldquo;I don&apos;t know&rdquo; than guess, a research agent that gets graded by its own evaluator, and a vision project from my internship at IIT Roorkee.
+                I&apos;m a CS undergrad at UPES Dehradun, majoring in Data Science &amp; AI/ML and graduating in 2027. What pulled me into AI was the gap between a cool demo and something you can actually rely on. So far that&apos;s meant a document Q&amp;A app that would rather say &ldquo;I don&apos;t know&rdquo; than guess, a research agent that gets graded by its own evaluator, a vision project from my internship at IIT Roorkee, and three data science case studies, from ridership forecasts to an A/B test, each with a live dashboard.
               </p>
               <div className="mt-6 max-w-sm -rotate-1 rounded-sm border border-white/10 bg-[#1b1814] px-5 py-4 shadow-[4px_6px_0_rgb(0_0_0/0.35)]">
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Right now</p>
@@ -315,9 +315,9 @@ const features = [
     no: "02",
     icon: ChartSpline,
     title: "Data science & ML",
-    text: "Good models start with the data. I begin with EDA and feature engineering, handle class imbalance properly, and choose metrics that fit the problem: recall over accuracy when a missed fraud case is the expensive mistake. When the problem calls for it, I reach for deep learning and computer vision.",
-    tags: ["EDA", "Feature engineering", "Scikit-Learn & XGBoost", "Imbalanced data", "PyTorch & CV"],
-    tiles: ["EDA", "ML", "F1", "DATA", "", "CV"],
+    text: "Good models start with the data. I begin with SQL and EDA, validate the way the model will be used, out of time rather than on shuffled rows, and choose metrics that fit the problem: recall when a missed fraud case is the expensive mistake, uplift when the question is whom to target. When the problem calls for it, I reach for deep learning and computer vision.",
+    tags: ["SQL & EDA", "Forecasting", "A/B testing & uplift", "Scikit-Learn & XGBoost", "PyTorch & CV"],
+    tiles: ["SQL", "ML", "A/B", "DATA", "", "CV"],
     tone: "text-volt",
     glow: "rgb(91 140 255 / 0.2)",
   },

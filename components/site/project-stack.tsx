@@ -75,7 +75,7 @@ function StackCard({
         </div>
         <div className="relative hidden min-h-0 overflow-hidden rounded-2xl bg-black md:block">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={work.slide.src} alt={work.slide.alt} className="absolute inset-0 h-full w-full object-cover" />
+          <img src={work.slide.src} alt={work.slide.alt} style={{ objectPosition: work.slide.position }} className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute bottom-3 left-3 flex flex-wrap gap-1.5">
             {work.stack.slice(0, 4).map((s) => (
               <span key={s} className="rounded-full bg-black/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-white backdrop-blur">

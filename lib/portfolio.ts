@@ -1,6 +1,8 @@
 export interface CarouselSlide {
   src: string;
   alt: string;
+  /** CSS object-position; a dashboard screenshot keeps its top-left corner, where the title is, in view */
+  position?: string;
 }
 
 const unsplash = (id: string) =>
@@ -21,6 +23,45 @@ export interface Work {
 
 /** Ordered to match the carousel: one slide per piece of work. */
 export const works: Work[] = [
+  {
+    slug: "transit-forecasting",
+    kind: "Forecasting · Time series",
+    title: "Chicago transit ridership forecasting",
+    period: "2026 · Live",
+    blurb:
+      "Daily ridership forecasts two weeks ahead for the Chicago Transit Authority, from 25 years of boardings joined to weather and holiday data. A gradient-boosting model, checked with a leak-free rolling backtest, has 56% less error than a seasonal-naive forecast and runs in the browser for what-if planning.",
+    metric: { value: "4.3%", label: "WAPE on 5,005 forecasts" },
+    stack: ["Scikit-Learn", "Pandas", "Time series", "Plotly", "REST APIs"],
+    live: "https://mehtaaarush.github.io/transit-ridership-forecasting/",
+    code: "https://github.com/mehtaaarush/transit-ridership-forecasting",
+    slide: { src: "/work/transit-ridership.webp", alt: "Ridership forecasting dashboard showing a 4.3% forecast error and recent ridership figures", position: "left top" },
+  },
+  {
+    slug: "ab-uplift",
+    kind: "Experimentation · Causal ML",
+    title: "A/B testing and uplift modelling",
+    period: "2026 · Live",
+    blurb:
+      "A randomised e-mail experiment on 64,000 customers, analysed end to end: randomisation checks, Holm-corrected confidence intervals and bootstrap robustness checks, then uplift models that find whom each e-mail persuades and an off-policy evaluation of targeting rules.",
+    metric: { value: "+$0.77", label: "revenue lift per customer" },
+    stack: ["Statsmodels", "SciPy", "Scikit-Learn", "Uplift modelling", "Plotly"],
+    live: "https://mehtaaarush.github.io/ab-testing-uplift-modeling/",
+    code: "https://github.com/mehtaaarush/ab-testing-uplift-modeling",
+    slide: { src: "/work/ab-uplift.webp", alt: "Experiment dashboard showing a $0.77 revenue lift per customer and passed randomisation checks", position: "left top" },
+  },
+  {
+    slug: "retail-analytics",
+    kind: "Customer analytics · SQL",
+    title: "E-commerce customer analytics",
+    period: "2026 · Live",
+    blurb:
+      "Two years of online retail transactions, 1.07 million invoice lines, cleaned and reconciled in SQL (DuckDB), then turned into trading KPIs, cohort retention, RFM segments and market-basket rules. A repurchase model validated out of time beats the RFM rule it would replace.",
+    metric: { value: "0.802", label: "ROC AUC, held-out quarter" },
+    stack: ["SQL", "DuckDB", "Pandas", "Scikit-Learn", "Plotly"],
+    live: "https://mehtaaarush.github.io/ecommerce-customer-analytics/",
+    code: "https://github.com/mehtaaarush/ecommerce-customer-analytics",
+    slide: { src: "/work/retail-analytics.webp", alt: "Customer analytics dashboard showing £9.29M net revenue with orders and average order value", position: "left top" },
+  },
   {
     slug: "vision-nav",
     kind: "Computer vision · IIT Roorkee",
@@ -120,6 +161,6 @@ export const skills: { group: string; items: string[] }[] = [
   { group: "Generative AI", items: ["LLMs", "RAG", "LangChain", "LangGraph", "AI agents", "Tool calling", "FAISS", "Embeddings", "Prompt engineering", "LLM evaluation", "Gemini API"] },
   { group: "Vision & deep learning", items: ["PyTorch", "OpenCV", "Transformers", "ViT", "DINOv2", "Swin Transformer", "GANs", "Transfer learning"] },
   { group: "Web & deployment", items: ["Next.js", "React", "Tailwind CSS", "FastAPI", "Docker", "PostgreSQL", "SQLAlchemy", "Alembic", "Vercel", "Render", "Git"] },
-  { group: "Data science", items: ["NumPy", "Pandas", "Scikit-Learn", "XGBoost", "Matplotlib", "EDA", "Power BI"] },
+  { group: "Data science", items: ["NumPy", "Pandas", "SciPy", "Statsmodels", "Scikit-Learn", "XGBoost", "DuckDB", "Matplotlib", "Plotly", "EDA", "A/B testing", "Uplift modelling", "Time-series forecasting", "Power BI"] },
   { group: "Languages & core CS", items: ["Python", "Java", "C", "SQL", "TypeScript", "JavaScript", "DSA", "DBMS", "OS", "Networks"] },
 ];
