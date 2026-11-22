@@ -105,60 +105,6 @@ function FigureShot({ work, large }: { work: Work; large?: boolean }) {
   );
 }
 
-/* the agent's own evaluation run, from eval_results.json in the repo */
-const RAG_EVAL = [
-  { q: "Swin: shifted windows", f: "1.00" },
-  { q: "DINOv2: visual features", f: "1.00" },
-  { q: "GANs: the core idea", f: "1.00" },
-  { q: "Why self-attention", f: "1.00" },
-  { q: "CLIP: how it's trained", f: "1.00" },
-];
-
-/** A terminal replaying the RAG agent's LLM-as-judge evaluation. */
-function TerminalCover({ large }: { large?: boolean }) {
-  const rows = [
-    <span key="cmd">
-      <span className="text-[#8f9dff]">$</span> python src/evaluate.py
-    </span>,
-    ...RAG_EVAL.map((r) => (
-      <span key={r.q} className="flex gap-2">
-        <span className="text-[#c3e88d]">✓</span>
-        <span className="min-w-0 flex-1 truncate text-white/75">{r.q}</span>
-        <span className="text-white/40">faithful</span>
-        <span className="text-[#ffcb6b]">{r.f}</span>
-      </span>
-    )),
-    <span key="avg" className="mt-1 block border-t border-dashed border-white/15 pt-1.5 text-white/90">
-      avg faithfulness <span className="text-[#c3e88d]">1.00</span> · relevancy <span className="text-[#ffcb6b]">0.75</span>
-    </span>,
-  ];
-  return (
-    <div className={`relative overflow-hidden border-b bg-[#0b0d15] ${large ? "aspect-[16/9] sm:aspect-[16/7]" : "aspect-[16/10]"}`}>
-      <div className="flex items-center gap-1.5 border-b border-white/[0.07] px-3 py-2" aria-hidden>
-        <span className="size-2 rounded-full bg-white/15" />
-        <span className="size-2 rounded-full bg-white/15" />
-        <span className="size-2 rounded-full bg-white/15" />
-        <span className="ml-2 font-mono text-[10px] text-white/40">agentic-rag-assistant · zsh</span>
-      </div>
-      <motion.div
-        aria-hidden
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } }}
-        className={`flex flex-col gap-1 px-4 py-3 font-mono leading-snug text-white/85 ${large ? "text-[13px] sm:px-6 sm:py-5" : "text-[10.5px]"}`}
-      >
-        {rows.map((row, i) => (
-          <motion.span key={i} variants={{ hidden: { opacity: 0, y: 4 }, show: { opacity: 1, y: 0 } }} className="block">
-            {row}
-          </motion.span>
-        ))}
-      </motion.div>
-      <p className="sr-only">Evaluation run: five test questions, each answered with faithfulness 1.0; average relevancy 0.75.</p>
-    </div>
-  );
-}
-
 function TypeCover({ work, large }: { work: Work; large?: boolean }) {
   const Icon = ICONS[work.slug] ?? Sparkles;
   return (
@@ -188,7 +134,6 @@ function TypeCover({ work, large }: { work: Work; large?: boolean }) {
 
 function Cover({ work, large }: { work: Work; large?: boolean }) {
   if (work.shot) return work.shot.frame === "figure" ? <FigureShot work={work} large={large} /> : <SiteShot work={work} large={large} />;
-  if (work.slug === "agentic-rag") return <TerminalCover large={large} />;
   return <TypeCover work={work} large={large} />;
 }
 

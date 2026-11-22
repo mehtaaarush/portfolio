@@ -159,28 +159,37 @@ export const works: Work[] = [
     slug: "agentic-rag",
     kind: "Agents · RAG",
     title: "Agentic RAG Research Assistant",
-    period: "2026",
+    period: "2026 · Live",
     summary:
       "A LangGraph agent that answers questions over 12 research papers and is graded by its own evaluator.",
     blurb:
-      "A LangGraph ReAct agent that answers questions over 12 CV and deep-learning papers. It routes between FAISS retrieval and Tavily web search, and is scored by a custom LLM-as-judge harness.",
+      "A LangGraph ReAct agent that answers questions over 12 CV and deep-learning papers. It routes between FAISS retrieval and Tavily web search, and is scored by a custom LLM-as-judge harness. The live web version runs the same agent on Gemini, with the paper search running in the visitor's browser.",
     areas: ["ai"],
     metric: { value: "1.0", label: "faithfulness, zero hallucination" },
     stack: ["LangChain", "LangGraph", "FAISS", "Gemini", "Tavily"],
+    live: "https://aarush-research-agent.vercel.app",
     code: "https://github.com/mehtaaarush/agentic-rag-assistant",
+    shot: {
+      src: "/work/research-agent.webp",
+      alt: "Research agent page: a question box and example questions beside a panel that shows how the agent answered, above the table of twelve papers",
+      width: 1400,
+      height: 1475,
+      position: "left top",
+    },
   },
   {
     slug: "ai-receptionist",
     kind: "Full-stack GenAI",
     title: "AI Receptionist for small businesses",
-    period: "2026",
+    period: "2026 · Live",
     summary:
       "A chat assistant for clinic and shop websites that answers questions and turns visitors into booking requests.",
     blurb:
-      "A Node.js server plus a chat widget that goes on any site with one script tag. The assistant answers from one JSON file per business (hours, prices, policies) and books appointments through a validated tool call. Leads land on a password-protected dashboard or a Google Sheet. It runs on Claude or Gemini, streams replies, and rate-limits each visitor to keep costs predictable.",
+      "A Node.js server plus a chat widget that goes on any site with one script tag. The assistant answers from one JSON file per business (hours, prices, policies) and books appointments through a validated tool call. Leads land on a password-protected dashboard or a Google Sheet. It runs on Claude or Gemini, streams replies, and rate-limits each visitor to keep costs predictable. The live demo puts it on a sample dental clinic's site.",
     areas: ["ai", "web"],
     metric: { value: "1 tag", label: "to add it to any website" },
     stack: ["Node.js", "Express", "Claude API", "Gemini API", "Tool calling"],
+    live: "https://aarush-ai-receptionist.vercel.app",
     code: "https://github.com/mehtaaarush/ai-receptionist",
     shot: {
       src: "/work/ai-receptionist.webp",
