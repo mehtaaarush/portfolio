@@ -169,29 +169,6 @@ export const works: Work[] = [
     code: "https://github.com/mehtaaarush/agentic-rag-assistant",
   },
   {
-    slug: "deeplure",
-    kind: "Computer vision · metric learning",
-    title: "Colour-invariant saree design recognition",
-    period: "2026",
-    summary:
-      "Face recognition for textiles: recognises a saree's design whatever colours it was woven in.",
-    blurb:
-      "A 128-d embedding that captures a saree's design (motifs, layout, weave) and ignores its colourway. Each training image is split into colour regions and repainted with new palettes, and a MobileNetV3 is trained with a supervised contrastive loss. On held-out real sarees it reaches a core AUC of 0.89, against 0.66 for zero-shot DINOv2, at about 10 ms per image on a CPU.",
-    areas: ["ai"],
-    metric: { value: "0.89", label: "core AUC (zero-shot DINOv2: 0.66)" },
-    stack: ["PyTorch", "MobileNetV3", "Metric learning", "SupCon loss", "DINOv2"],
-    code: "https://github.com/mehtaaarush/deeplure",
-    shot: {
-      src: "/work/deeplure.webp",
-      alt: "Verification ROC curves comparing the trained embedding with zero-shot and colour-histogram baselines",
-      width: 1430,
-      height: 585,
-      frame: "figure",
-      plot: true,
-      caption: "verification ROC",
-    },
-  },
-  {
     slug: "ai-receptionist",
     kind: "Full-stack GenAI",
     title: "AI Receptionist for small businesses",
@@ -281,7 +258,7 @@ export const featured = works.filter((w) => !["path-planning", "deploy"].include
 export const skills: { group: string; items: string[] }[] = [
   { group: "Data science", items: ["NumPy", "Pandas", "SciPy", "Statsmodels", "Scikit-Learn", "XGBoost", "DuckDB", "Matplotlib", "Plotly", "EDA", "A/B testing", "Uplift modelling", "Time-series forecasting", "Power BI"] },
   { group: "Generative AI", items: ["LLMs", "RAG", "LangChain", "LangGraph", "AI agents", "Tool calling", "FAISS", "Embeddings", "Prompt engineering", "LLM evaluation", "Gemini API", "Claude API"] },
-  { group: "Vision & deep learning", items: ["PyTorch", "OpenCV", "Transformers", "ViT", "DINOv2", "Swin Transformer", "GANs", "Metric learning", "Transfer learning"] },
+  { group: "Vision & deep learning", items: ["PyTorch", "OpenCV", "Transformers", "ViT", "DINOv2", "Swin Transformer", "GANs", "Transfer learning"] },
   { group: "Web & deployment", items: ["Next.js", "React", "Tailwind CSS", "Node.js", "Express", "FastAPI", "Docker", "PostgreSQL", "SQLAlchemy", "Alembic", "Vercel", "Render", "Git"] },
   { group: "Languages & core CS", items: ["Python", "Java", "C", "SQL", "TypeScript", "JavaScript", "DSA", "DBMS", "OS", "Networks"] },
 ];
