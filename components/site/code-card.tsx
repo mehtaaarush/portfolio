@@ -18,9 +18,9 @@ const C = {
   cls: "text-[#ffcb6b]",
   str: "text-[#c3e88d]",
   num: "text-[#f78c6c]",
-  com: "text-[#6b7592] italic",
+  com: "text-[#7c7c7c] italic",
   op: "text-[#89ddff]",
-  id: "text-[#e4e8f4]",
+  id: "text-[#e6e6e6]",
 };
 type Tok = [keyof typeof C, string];
 
@@ -59,7 +59,7 @@ export function CodeCard() {
   const lines = buildLines(time);
 
   return (
-    <figure className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b0d15] text-[#e4e8f4] shadow-lift">
+    <figure className="overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d] text-[#e6e6e6] shadow-lift">
       <div className="flex items-center gap-3 border-b border-white/[0.07] bg-white/[0.025] px-4 py-2.5">
         <span className="flex gap-1.5" aria-hidden>
           <span className="size-2.5 rounded-full bg-[#ff6159]" />
@@ -92,7 +92,7 @@ export function CodeCard() {
                       {text}
                     </span>
                   ))}
-                  {i === lines.length - 1 && <span className="caret ml-0.5 inline-block h-[1.1em] w-[0.55em] translate-y-[0.2em] bg-[#8f9dff]" />}
+                  {i === lines.length - 1 && <span className="caret ml-0.5 inline-block h-[1.1em] w-[0.55em] translate-y-[0.2em] bg-[#e4e4e4]" />}
                 </span>
               </motion.span>
             );

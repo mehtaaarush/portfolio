@@ -88,38 +88,38 @@
   color-scheme: light;
 }
 
-/* "night lab": the default theme. Near-black ink, periwinkle pen, a lime highlighter. */
+/* "night lab": the default theme. Black paper, white ink, neutral greys and a lime highlighter. */
 .dark {
-  --background: #07080d;
-  --foreground: #eceef5;
-  --card: #0f1119;
-  --card-foreground: #eceef5;
-  --popover: #0f1119;
-  --popover-foreground: #eceef5;
-  --primary: #8f9dff;
-  --primary-foreground: #07080d;
-  --secondary: #161925;
-  --secondary-foreground: #eceef5;
-  --muted: #161925;
-  --muted-foreground: #959cb0;
-  --accent: rgb(143 157 255 / 0.14);
-  --accent-foreground: #eceef5;
+  --background: #000000;
+  --foreground: #ededed;
+  --card: #0b0b0b;
+  --card-foreground: #ededed;
+  --popover: #0b0b0b;
+  --popover-foreground: #ededed;
+  --primary: #f2f2f2;
+  --primary-foreground: #000000;
+  --secondary: #171717;
+  --secondary-foreground: #ededed;
+  --muted: #171717;
+  --muted-foreground: #a3a3a3;
+  --accent: rgb(255 255 255 / 0.08);
+  --accent-foreground: #ededed;
   --destructive: #ff7d6e;
-  --border: rgb(236 238 245 / 0.085);
-  --input: rgb(236 238 245 / 0.14);
-  --ring: #8f9dff;
+  --border: rgb(255 255 255 / 0.1);
+  --input: rgb(255 255 255 / 0.16);
+  --ring: #f2f2f2;
 
   --pen: #ff8f80;
   --marker: rgb(190 242 100 / 0.42);
-  --sticky: #1b1e2b;
+  --sticky: #1a1a1a;
   --polaroid: #ecebe4;
   --tape: rgb(255 226 120 / 0.5);
-  --grid: rgb(143 157 255 / 0.05);
-  --tint-data: #1b160d;
-  --tint-ai: #121734;
-  --tint-web: #0d221c;
-  --paper-shadow: inset 0 1px 0 rgb(255 255 255 / 0.03), 0 14px 34px -18px rgb(0 0 0 / 0.8);
-  --lift-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 30px 60px -26px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(143 157 255 / 0.16), 0 0 46px -12px rgb(143 157 255 / 0.22);
+  --grid: rgb(255 255 255 / 0.04);
+  --tint-data: #19160f;
+  --tint-ai: #151515;
+  --tint-web: #0f1913;
+  --paper-shadow: inset 0 1px 0 rgb(255 255 255 / 0.03), 0 14px 34px -18px rgb(0 0 0 / 0.9);
+  --lift-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 30px 60px -26px rgb(0 0 0 / 0.95), 0 0 0 1px rgb(255 255 255 / 0.12);
   color-scheme: dark;
 }
 
@@ -140,7 +140,7 @@
     background-size: 32px 32px;
     background-position: center top;
   }
-  /* night lab: a dot grid that fades out down the page, under two soft glows */
+  /* night lab: a dot grid that fades out down the page, under one faint white glow */
   .dark body {
     background-image: none;
   }
@@ -153,15 +153,12 @@
     pointer-events: none;
   }
   .dark body::before {
-    background-image: radial-gradient(rgb(236 238 245 / 0.11) 1px, transparent 1.4px);
+    background-image: radial-gradient(rgb(255 255 255 / 0.1) 1px, transparent 1.4px);
     background-size: 26px 26px;
     mask-image: radial-gradient(ellipse 110% 85% at 50% 0%, #000 25%, transparent 80%);
   }
   .dark body::after {
-    background:
-      radial-gradient(42rem 30rem at 12% -6%, rgb(99 102 241 / 0.2), transparent 70%),
-      radial-gradient(36rem 26rem at 92% 4%, rgb(45 212 191 / 0.1), transparent 70%),
-      radial-gradient(40rem 30rem at 50% 110%, rgb(143 157 255 / 0.08), transparent 70%);
+    background: radial-gradient(52rem 32rem at 50% -12%, rgb(255 255 255 / 0.07), transparent 70%);
   }
   h1, h2, h3 {
     text-wrap: balance;

@@ -13,7 +13,7 @@ const isDark = () => document.documentElement.classList.contains("dark");
 
 function setTheme(dark: boolean) {
   document.documentElement.classList.toggle("dark", dark);
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#07080d" : "#f7f5ef");
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#000000" : "#f7f5ef");
   try {
     localStorage.setItem("theme", dark ? "dark" : "light");
   } catch {

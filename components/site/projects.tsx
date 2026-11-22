@@ -268,7 +268,7 @@ function ProjectDialog({ work, origin, onClose }: { work: Work; origin: Origin; 
     <div className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-6">
       <motion.div
         aria-hidden
-        className="absolute inset-0 bg-[#0b1020]/50 backdrop-blur-[3px]"
+        className="absolute inset-0 bg-black/60 backdrop-blur-[3px]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

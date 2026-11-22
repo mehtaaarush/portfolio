@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#07080d",
+  themeColor: "#000000",
 };
 
 /* Runs before first paint so the page never flashes the wrong theme. Dark is the default; light only if the visitor picked it. */
