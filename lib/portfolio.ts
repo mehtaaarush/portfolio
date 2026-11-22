@@ -297,6 +297,13 @@ export const journey: { when: string; kind: JourneyKind; title: string; org: str
   { when: "2027", kind: "next", title: "Graduating", org: "UPES Dehradun", text: "Looking for SWE and ML roles where I can ship AI systems end to end." },
 ];
 
+/** One-page resumes, one per kind of role (public copies, without the phone number). */
+export const resumes = [
+  { label: "Software engineering", href: "/resume/Aarush_Mehta_Resume_Software_Engineering.pdf" },
+  { label: "AI & machine learning", href: "/resume/Aarush_Mehta_Resume_AI_ML.pdf" },
+  { label: "Data science & analytics", href: "/resume/Aarush_Mehta_Resume_Data_Science.pdf" },
+];
+
 export const links = {
   email: "aarushmehta902@gmail.com",
   github: "https://github.com/mehtaaarush",

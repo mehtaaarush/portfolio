@@ -7,6 +7,7 @@ import Image from "next/image";
 import { HandNote } from "@/components/site/hand";
 import { HeroChart } from "@/components/site/hero-chart";
 import { Marker } from "@/components/site/marker";
+import { ResumeMenu } from "@/components/site/resume-menu";
 import { links } from "@/lib/portfolio";
 import { AVAILABILITY, HERO } from "@/lib/site-content";
 
@@ -128,7 +129,7 @@ export function Hero() {
             {HERO.intro}
           </p>
 
-          <div style={delay(0.52)} className="rise mt-9 flex flex-wrap items-center gap-3">
+          <div style={delay(0.52)} className="rise relative z-20 mt-9 flex flex-wrap items-center gap-3">
             <a
               href="#projects"
               className="group inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 font-semibold text-primary-foreground shadow-[0_12px_28px_-12px_var(--primary)] transition-[translate,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_-12px_var(--primary)]"
@@ -142,6 +143,7 @@ export function Hero() {
             >
               Get in touch
             </a>
+            <ResumeMenu />
             <span className="flex items-center gap-4 px-2 text-sm font-semibold text-muted-foreground">
               {[
                 ["GitHub", links.github],

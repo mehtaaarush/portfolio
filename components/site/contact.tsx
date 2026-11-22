@@ -1,13 +1,13 @@
 "use client";
 
-import { ArrowUpRight, Check, Copy, Mail } from "lucide-react";
+import { ArrowUpRight, Check, Copy, FileText, Mail } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRef, useState } from "react";
 
 import { HandNote } from "@/components/site/hand";
 import { Marker } from "@/components/site/marker";
 import { Reveal } from "@/components/site/reveal";
-import { links } from "@/lib/portfolio";
+import { links, resumes } from "@/lib/portfolio";
 
 export function Contact() {
   const [copied, setCopied] = useState(false);
@@ -72,6 +72,25 @@ export function Contact() {
               <span className="sr-only" aria-live="polite">
                 {copied ? "Email address copied to the clipboard" : ""}
               </span>
+            </div>
+
+            <div className="mt-8">
+              <p className="text-sm font-semibold text-muted-foreground">Resume, by role</p>
+              <div className="mt-3 flex flex-wrap gap-2.5">
+                {resumes.map((r) => (
+                  <a
+                    key={r.href}
+                    href={r.href}
+                    target="_blank"
+                    rel="noopener"
+                    className="group inline-flex h-10 items-center gap-2 rounded-full border border-foreground/15 bg-card px-4 text-sm font-semibold transition-[translate,border-color,color] duration-300 hover:-translate-y-0.5 hover:border-foreground/30 hover:text-primary"
+                  >
+                    <FileText className="size-4 shrink-0" aria-hidden />
+                    {r.label}
+                    <span className="font-mono text-[11px] font-medium text-muted-foreground">PDF</span>
+                  </a>
+                ))}
+              </div>
             </div>
 
             <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-dashed pt-6 text-sm font-semibold">
